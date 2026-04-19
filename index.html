@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talos-SDL | Command Your Lab</title>
+    <style>
+        :root {
+            --talos-green: #288c00;
+            --bg-dark: #0d1117;
+            --text-light: #e6edf3;
+            --console-bg: #010409;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+        }
+
+        /* LEFT SIDE: The Story & Media */
+        #story-flow {
+            width: 60%;
+            padding: 5vh 5%;
+        }
+
+        .step {
+            min-height: 80vh;
+            margin-bottom: 20vh;
+            opacity: 0.3;
+            transition: opacity 0.5s;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .media-container {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #30363d;
+            background: #161b22;
+            margin: 20px 0;
+        }
+
+        .media-container img, .media-container video {
+            width: 100%;
+            display: block;
+        }
+
+        /* RIGHT SIDE: The Sticky Console */
+        #console-sidebar {
+            width: 40%;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            background-color: var(--console-bg);
+            border-left: 1px solid var(--talos-green);
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-y: auto;
+            box-shadow: inset 0 0 20px rgba(40, 140, 0, 0.1);
+        }
+
+        .console-header {
+            color: var(--talos-green);
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        #console-content {
+            white-space: pre-wrap;
+            color: #8b949e;
+        }
+
+        .log-entry { margin-bottom: 10px; animation: fadeIn 0.3s; }
+        .log-cmd { color: var(--talos-green); }
+        .log-info { color: #58a6ff; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+
+        h2 { color: var(--talos-green); font-size: 2rem; }
+        p { line-height: 1.6; font-size: 1.1rem; color: #afb8c1; }
+        /* MOBILE OVERRIDE: Switches layout only when screen is narrow */
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+            }
+
+            #story-flow {
+                width: 100%;
+                /* Balanced padding: 5vh top/bottom, 4% left/right */
+                padding: 5vh 4% 25vh 4%; 
+                box-sizing: border-box; /* Crucial: includes padding in the width calculation */
+            }
+
+            #console-sidebar {
+                width: 100%;
+                height: 20vh;
+                position: fixed;
+                top: auto;
+                bottom: 0;
+                border-left: none;
+                border-top: 2px solid var(--talos-green);
+                z-index: 1000;
+                /* Ensure console text doesn't hit the screen edges on mobile */
+                padding: 15px; 
+            }
+
+            .media-container {
+                width: 100%;
+                margin: 15px 0; /* Slightly tighter vertical spacing for mobile */
+            }
+
+            .step {
+                min-height: auto;
+                margin-bottom: 10vh;
+            }
+            
+            h2 { font-size: 1.6rem; } /* Slightly smaller headers for mobile */
+        
+        }
+    </style>
+</head>
+<body>
+
+<div id="story-flow">
+    <section class="step" id="step1" data-log="Traditional lab automation requires rigid, proprietary drivers. Talos-SDL breaks this by treating hardware as 'Self-Describing.' Talos-native instruments use CircuitPython microcontrollers to broadcast an JSON manifest of their own capabilities upon connection. This means the AI agent doesn't need to be 'pre-programmed' for a specific pump or colorimeter; it simply reads the instrument's 'how-to' manual and immediately integrates it into the global command set.">
+        <h2>01. Introducing Talos-SDL: Instrumentation simplified.</h2>
+        <p>Talos-SDL is a framework that makes interacting with scientific hardware feel like collaborating with a laboratory technician.</p>
+        <div class="media-container">
+            <img src="assets/talos-intro.gif" alt="Startup">
+        </div>
+    </section>
+
+    <section class="step" id="step2" data-log="Talos-sdl firmware present their capabilities to the the agent, allowing it to translate human readable commands into operations.">
+        <h2>02. Operation: Plain-language commands.</h2>
+        <p>Talos-SDL converts human intent into deterministic JSON schema, bridging the gap between scientific thought and instrument action.</p>
+        <div class="media-container">
+            <img src="assets/scene2.gif" alt="Reordering Animation">
+        </div>
+    </section>
+
+    <section class="step" id="step3" data-log="The agent generates a plan, but the Safety Gate is active (locked 🔒). Here, the scientist identifies an unnecessary 'home' step and deletes it and can provide an optional rationale. The modification and the rationale are recorded in the Sciencelog, effectively 'training' the agent's memory for future experiments without requiring complex re-coding.">
+        <h2>03. Human-in-the-Loop: The scientist remains in control.</h2>
+        <p>Safety and precision are maintained through a mandatory Review-and-Confirm cycle, allowing scientists to audit AI plans before execution.</p>
+        <div class="media-container">
+            <img src="assets/scene3.gif" alt="Reordering Animation">
+        </div>
+    </section>
+
+    <section class="step" id="step4" data-log="The complexity of the 23-step plan shown here illustrates Talos's ability to orchestrate different hardware types simultaneously. The agent alternates between the Sidekick (movement) and the Colorimeter (measurement). The scientist doesn't need to write code to synchronize these devices; the AI manages the hand-offs based on the instrument-reported capabilities.">
+        <h2>04. Orchestration: Multiple instruments, one tool.</h2>
+        <p>Talos identifies every connected device at startup and automatically coordinates complex, multi-hardware workflows.</p>
+        <div class="media-container">
+            <img src="assets/scene4.gif" alt="Reordering Animation">
+        </div>
+    </section>
+
+    <section class="step" id="step5" data-log="Real labs are messy. In this scenario, the Sidekick firmware reports a [PROBLEM] during a dispense. Rather than crashing the system, the error is logged as a state in the digital notebook. By enabling the Safety Gate (moving from ⚡ to 🔒) and asking to 'repeat the last process,' the scientist leverages the agent's context to safely re-attempt the failed steps. Not shown is that the error details are stored in the ScienceLog, which the agent read before making the same mistake twice.">
+        <h2>05. Resilient Execution: Automated error handling.</h2>
+        <p>When hardware fails, Talos doesn't just stop; it captures the diagnostic data and uses it to help the scientist recover the experiment.</p>
+        <div class="media-container">
+            <img src="assets/scene5.gif" alt="Reordering Animation">
+        </div>
+    </section>
+
+        <section class="step" id="step6" data-log="This is the pinnacle of the Agentic Lab. The scientist gives a vague command: 'do the same thing... but change the order.' The agent looks back at the Sciencelog for well H6, identifies which pumps contain which solutions, and re-sequences the FSM commands for well H8 to fulfill the intent. This demonstrates true semantic understanding of experimental logic rather than simple script execution.">
+        <h2>06. Logic and Context: Understanding scientific intent.</h2>
+        <p>By leveraging LLM reasoning, Talos understands abstract instructions by referencing previous experiment data.</p>
+        <div class="media-container">
+            <img src="assets/scene6.gif" alt="Reordering Animation">
+        </div>
+    </section>
+<!--
+    <section class="step" id="step3" data-log="[LOG] Writing to Sciencelog...\n[LOG] Syncing Transactionlog to Vector Store\n[OK] Metadata indexed for semantic search">
+        <h2>03. The Digital Notebook</h2>
+        <p>Science is only as good as its documentation. Talos splits records into Sciencelogs for humans and Transactionlogs for the machine audit trail.</p>
+        <div class="media-container">
+            <video autoplay muted loop>
+                <source src="YOUR_TIMELAPSE.mp4" type="video/mp4">
+            </video>
+        </div>
+    </section>
+-->
+</div>
+
+<div id="console-sidebar">
+    <div class="console-header">talos - your agentic laboratory assistant</div>
+    <div id="console-content">
+        </div>
+</div>
+
+<script>
+    const steps = document.querySelectorAll('.step');
+    const consoleContent = document.getElementById('console-content');
+
+    const observerOptions = {
+        threshold: 0.6 // Trigger when 60% of the section is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Highlight the active section
+                steps.forEach(s => s.classList.remove('active'));
+                entry.target.classList.add('active');
+
+                // Update the console
+                const logText = entry.target.getAttribute('data-log');
+                updateConsole(logText);
+            }
+        });
+    }, observerOptions);
+
+    steps.forEach(step => observer.observe(step));
+
+    function updateConsole(text) {
+        // Clear and add "typing" effect or just instant swap
+        consoleContent.innerHTML = `<div class="log-entry">${text.replace(/\n/g, '<br>')}</div>`;
+    }
+</script>
+
+</body>
+</html>
