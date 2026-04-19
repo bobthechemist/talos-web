@@ -124,13 +124,47 @@
             }
             
             h2 { font-size: 1.6rem; } /* Slightly smaller headers for mobile */
-        
+
+            .hero-section {
+                min-height: 60vh !important; /* Slightly shorter than the steps */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                opacity: 1 !important; /* Always visible */
+            }
+
+            .hero-logo {
+                max-width: 300px;
+                margin-bottom: 20px;
+            }
+
+            .repo-btn {
+                display: inline-block;
+                color: var(--talos-green);
+                text-decoration: none;
+                border: 1px solid var(--talos-green);
+                padding: 10px 20px;
+                font-family: 'Consolas', monospace;
+                margin-top: 15px;
+                transition: all 0.3s;
+            }
+
+            .repo-btn:hover {
+                background: var(--talos-green);
+                color: var(--bg-dark);
+            }
         }
     </style>
 </head>
 <body>
 
 <div id="story-flow">
+    <section class="step hero-section" id="hero" data-log="[SYSTEM] Welcome to Talos-SDL&#10;[LINK] <a href='https://www.github.com/bobthechemist/talos-sdl' target='_blank' class='log-cmd' style='text-decoration:underline;'>Access Source Code Repository</a>&#10;&#10;Talos-SDL is an open-hardware framework for agentic laboratories. Scroll to explore the architecture.">
+        <img src="assets/talos-logo.png" alt="Talos-SDL" class="hero-logo">
+        <h2>Command Your Lab.</h2>
+        <p>A deterministic bridge between high-level AI reasoning and low-level hardware execution.</p>
+    </section>
+    
     <section class="step" id="step1" data-log="Traditional lab automation requires rigid, proprietary drivers. Talos-SDL breaks this by treating hardware as 'Self-Describing.' Talos-native instruments use CircuitPython microcontrollers to broadcast an JSON manifest of their own capabilities upon connection. This means the AI agent doesn't need to be 'pre-programmed' for a specific pump or colorimeter; it simply reads the instrument's 'how-to' manual and immediately integrates it into the global command set.">
         <h2>01. Introducing Talos-SDL: Instrumentation simplified.</h2>
         <p>Talos-SDL is a framework that makes interacting with scientific hardware feel like collaborating with a laboratory technician.</p>
