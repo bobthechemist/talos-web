@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TALOS Lab Automation AR Experience</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    
+    <style>
+      body { margin: 0; overflow: hidden; background-color: #000; }
+      /* Optional UI overlay to guide the user */
+      #ar-overlay {
+        position: absolute; top: 10px; left: 10px; right: 10px;
+        text-align: center; color: white; font-family: sans-serif;
+        background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px;
+        z-index: 10; pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="ar-overlay">Point your camera at any AR-marked figure on the poster</div>
+
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2;" 
+             color-space="sRGB" 
+             renderer="colorManagement: true, physicallyCorrectLights" 
+             vr-mode-ui="enabled: false" 
+             device-orientation-permission-ui="enabled: false">
+      
+      <a-assets>
+        <video id="vid-robot1" src="./videos/NNNQ.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-robot2" src="./videos/synthesis_loop.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video src="#vid-robot1" position="0 0 0" height="0.56" width="1"></a-video>
+      </a-entity>
+
+      <a-entity mindar-image-target="targetIndex: 1">
+        <a-video src="#vid-robot2" position="0 0 0" height="0.56" width="1"></a-video>
+      </a-entity>
+
+    </a-scene>
+
+    <script>
+      // Control video playback based on tracking detection
+      const targets = document.querySelectorAll('[mindar-image-target]');
+      targets.forEach((target) => {
+        target.addEventListener("targetFound", event => {
+          const videoElement = document.querySelector(target.querySelector('a-video').getAttribute('src'));
+          videoElement.play().catch(err => console.log("Playback blocked until user taps screen", err));
+        });
+        target.addEventListener("targetLost", event => {
+          const videoElement = document.querySelector(target.querySelector('a-video').getAttribute('src'));
+          videoElement.pause();
+        });
+      });
+    </script>
+  </body>
+</html>
