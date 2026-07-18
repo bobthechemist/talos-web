@@ -10,3 +10,5 @@ No gifs allowed. Use ffmpeg to convert to mp4.
 Screen capture for CMD display: 0.5 bitrate, disable audio, 2 pass, set command prompt font to 36
 
 **Will need to try including the markers in the screen capture. Have a powerpoint slide, white background with markers and position the cmd prompt in that.**
+
+Added a targets directory for the images used on the poster.

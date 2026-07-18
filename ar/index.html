@@ -28,18 +28,23 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <video id="vid-robot1" src="./videos/robot-play-date.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
-        <video id="vid-robot2" src="./videos/synthesis_loop.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-talos1" src="./videos/playdate.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-talos2" src="./videos/fill.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-talos3" src="./videos/plan325.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
+      
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="#vid-robot1" position="0 0 0" height="0.56" width="1" rotation="0 0 0"></a-video>
+        <a-video src="#vid-talos1" position="0 0 0" height="0.56" width="1" rotation="0 0 0"></a-video>
       </a-entity>
 
       <a-entity mindar-image-target="targetIndex: 1">
-        <a-video src="#vid-robot2" position="0 0 0" height="0.56" width="1"></a-video>
+        <a-video src="#vid-talos2" position="0 0 0" height="0.56" width="1"></a-video>
+      </a-entity>
+
+      <a-entity mindar-image-target="targetIndex: 2">
+        <a-video src="#vid-talos3" position="0 0 0" height="0.56" width="1"></a-video>
       </a-entity>
 
     </a-scene>
