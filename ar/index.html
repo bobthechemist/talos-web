@@ -31,6 +31,8 @@
         <video id="vid-talos1" src="./videos/playdate.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
         <video id="vid-talos2" src="./videos/fill.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
         <video id="vid-talos3" src="./videos/plan325.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-talos4" src="./videos/closeup.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-talos5" src="./videos/probe_view.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -47,6 +49,13 @@
         <a-video src="#vid-talos3" position="0 0 0" height="0.56" width="1"></a-video>
       </a-entity>
 
+      <a-entity mindar-image-target="targetIndex: 3">
+        <a-video src="#vid-talos4" position="0 0 0" height="0.56" width="1"></a-video>
+      </a-entity>
+
+      <a-entity mindar-image-target="targetIndex: 4">
+        <a-video src="#vid-talos5" position="0 0 0" height="0.56" width="1"></a-video>
+      </a-entity>
     </a-scene>
 
     <script>

@@ -12,3 +12,13 @@ Screen capture for CMD display: 0.5 bitrate, disable audio, 2 pass, set command 
 **Will need to try including the markers in the screen capture. Have a powerpoint slide, white background with markers and position the cmd prompt in that.**
 
 Added a targets directory for the images used on the poster.
+
+
+workflow
+- Create video 
+- Capture frame that will be used on poster
+- add stills to `targets` and label them with a number 
+- add videos to `videos` and make sure name aligns with still
+- update index.html to have the right files loaded
+- recreate targets.mind
+- push changes
