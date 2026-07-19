@@ -20,5 +20,5 @@ workflow
 - add stills to `targets` and label them with a number 
 - add videos to `videos` and make sure name aligns with still
 - update index.html to have the right files loaded
-- recreate targets.mind
+- recreate targets.mind https://hiukim.github.io/mind-ar-js-doc/tools/compile/
 - push changes

@@ -5,6 +5,8 @@
     <title>TALOS Lab Automation AR Experience</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <!-- Included the dependency for the real-time chroma key/green screen material shader -->
+    <script src="https://unpkg.com/aframe-chromakey-material@1.1.4/dist/aframe-chromakey-material.min.js"></script>
     
     <style>
       body { margin: 0; overflow: hidden; background-color: #000; }
@@ -28,16 +30,27 @@
              device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <video id="vid-robot1" src="./videos/robot-play-date" preload="auto" loop="true" playsinline webkit-playsinline></video>
+        <video id="vid-robot1" src="./videos/ada_captions.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
         <video id="vid-robot2" src="./videos/repl.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+      <!-- Target Index 0: Captions Video with Magenta Chroma Keying -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="#vid-robot1" position="0 0 0" height="0.56" width="1" rotation="0 0 0"></a-video>
+        <!-- 
+          Using geometry and material components instead of <a-video> to apply the chromakey shader.
+          color: 1 0 1 targets pure magenta [Red=1, Green=0, Blue=1] 
+          distance: 0.15 acts as the tolerance boundary for bleeding edge pixels.
+        -->
+        <a-entity geometry="primitive: plane; height: 0.56; width: 1" 
+                  material="shader: chromakey; src: #vid-robot1; color: 1 0 1; distance: 0.15;"
+                  position="0 0 0" 
+                  rotation="0 0 0">
+        </a-entity>
       </a-entity>
 
+      <!-- Target Index 1: Standard Video Overlay -->
       <a-entity mindar-image-target="targetIndex: 1">
         <a-video src="#vid-robot2" position="0 0 0" height="0.56" width="1"></a-video>
       </a-entity>
@@ -49,12 +62,19 @@
       const targets = document.querySelectorAll('[mindar-image-target]');
       targets.forEach((target) => {
         target.addEventListener("targetFound", event => {
-          const videoElement = document.querySelector(target.querySelector('a-video').getAttribute('src'));
-          videoElement.play().catch(err => console.log("Playback blocked until user taps screen", err));
+          // Finds the video element regardless of if it's on an <a-video> or custom <a-entity material>
+          const element = target.querySelector('a-video') || target.querySelector('[material]');
+          const videoElement = document.querySelector(element.getAttribute('src'));
+          if (videoElement) {
+            videoElement.play().catch(err => console.log("Playback blocked until user taps screen", err));
+          }
         });
         target.addEventListener("targetLost", event => {
-          const videoElement = document.querySelector(target.querySelector('a-video').getAttribute('src'));
-          videoElement.pause();
+          const element = target.querySelector('a-video') || target.querySelector('[material]');
+          const videoElement = document.querySelector(element.getAttribute('src'));
+          if (videoElement) {
+            videoElement.pause();
+          }
         });
       });
     </script>
